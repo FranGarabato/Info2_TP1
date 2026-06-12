@@ -113,7 +113,7 @@ Por este motivo, algunas acciones simples permanecieron dentro de `main()`, como
 Se compilo utilizando GCC:
 
 ```bash
-gcc -c -Wall main.c funciones.c -o tp1
+gcc -Wall -Wextra main.c funciones.c -o tp1
 ```
 > No se encontraron Warnings al compilar el programa
 
@@ -129,6 +129,39 @@ Se ejecuta:
 ## Nota
 Se encontro un error en el codigo en el cual al calcular el total de stock se sumaban valores historicos.
 > Se soluciono inicializando previamente el campo de la estructura correspondiente en "0".
+
+
+## Correcciones Realizadas
+
+Tras la revisión del trabajo práctico se realizaron modificaciones relacionadas con el uso de punteros dentro de las funciones del programa.
+
+Si bien los prototipos de las funciones recibían correctamente punteros a estructuras (`articulos_t *`), la implementación utilizaba principalmente notación de arreglo para acceder a los distintos registros, mediante expresiones del tipo:
+
+```c
+articulo[i]
+```
+
+A fin de adecuar el código al uso explícito de punteros, se refactorizaron las funciones para recorrer las estructuras mediante aritmética de punteros y acceso utilizando el operador `->`.
+
+Por ejemplo, los recorridos de registros pasaron a realizarse mediante el desplazamiento de punteros:
+
+```c
+ptr++;
+```
+
+y el acceso a los campos de la estructura mediante:
+
+```c
+ptr->campo
+```
+
+en lugar de utilizar índices sobre el arreglo.
+
+Además, teniendo en cuenta que es posible igualar estructuras de un mismo tipo, en la función de ordenamiento se implementó el intercambio completo de estructuras utilizando variables auxiliares del mismo tipo, simplificando el código y evitando intercambios individuales de cada uno de los campos.
+
+Estas modificaciones mantienen el comportamiento original del programa, pero permiten utilizar los punteros de forma explícita, cumpliendo con los criterios solicitados en la corrección.
+
+
 
 ## Autor
 

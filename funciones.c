@@ -7,25 +7,33 @@ void cargar_articulo(articulos_t *articulo){
 
     int i, articulo_index, sucursal;                              
     char desc[90];                                                //variabe para guardar la descripcion del articulo
+    articulos_t *ptr = articulo;                                  //Creo un puntero auxiliar que apunta a las fichas
+
     printf("Ingrese la descripcion del articulo: ");
         scanf("%s",desc);
 
         i=0;
-        while (articulo[i].descripcion[0] && strcmp(desc, articulo[i].descripcion)) i++;
-        articulo_index = i;
-        strcpy(articulo[i].descripcion, desc);
+        while (ptr->descripcion[0] && strcmp(desc, ptr->descripcion)) {         //Recorro las fichas con el puntero hasta encontrar la que corresponde a la descripcion, o una vacia.
+            
+            ptr++;
+            i++;
+        }
 
-        printf("\n%s, Indice: %d\n", articulo[articulo_index].descripcion, articulo_index);
+        articulo_index = i;
+
+        strcpy(ptr->descripcion, desc);                                         //guardo la descripcion en la ficha
+
+        printf("\n%s, Indice: %d\n", ptr->descripcion, articulo_index);
 
         printf("Para que sucursal va a realizar la carga? (1,2,3)");
         scanf("%d", &sucursal);                                                                 //Selecciono la sucursal a editar
 
         printf("Ingrese la cantidad del articulo para la sucursal %d: ", sucursal);
-        scanf("%d", &articulo[articulo_index].cantidad_sucursal[sucursal-1]);                   //Guardo el Stock de la sucursal Seleccionada
+        scanf("%d", &ptr->cantidad_sucursal[sucursal-1]);                                       //Guardo el Stock de la sucursal Seleccionada
 
-        articulo[articulo_index].total =0;
+        ptr->total =0;
         for(i=0;i<3;i++) {                                                                      //Guardo el Total de Stock
-            articulo[articulo_index].total += articulo[articulo_index].cantidad_sucursal[i];        
+            ptr->total += ptr->cantidad_sucursal[i];        
         }
 
 
@@ -34,10 +42,12 @@ void cargar_articulo(articulos_t *articulo){
 void print_fichas(articulos_t *articulo){
 
     int i=0;
+    articulos_t *ptr = articulo;                                  //Creo un puntero auxiliar que apunta a las fichas
     printf("Articulo\tSucursal 1\tSucursal 2\tSucursal 3\tTotal\n");
-    while(i< CANT_ARTICULOS && articulo[i].descripcion[0]){
-        printf("%s\t\t%d\t\t%d\t\t%d\t\t%d\n", articulo[i].descripcion, articulo[i].cantidad_sucursal[SUCURSAL_1], articulo[i].cantidad_sucursal[SUCURSAL_2], articulo[i].cantidad_sucursal[SUCURSAL_3],articulo[i].total);
+    while(i< CANT_ARTICULOS && ptr->descripcion[0]){                //Recorro todas las fichas hasta encontrar una vacia, o si alcanzo el limite de articulos
+        printf("%s\t\t%d\t\t%d\t\t%d\t\t%d\n", ptr->descripcion, ptr->cantidad_sucursal[SUCURSAL_1], ptr->cantidad_sucursal[SUCURSAL_2], ptr->cantidad_sucursal[SUCURSAL_3],ptr->total);
         i++;
+        ptr++;
     }
 }
 
@@ -45,36 +55,25 @@ void print_fichas(articulos_t *articulo){
 
 void sort_fichas(articulos_t *articulo){
 
-        int cont, i, articulo_index;
-        char desc[90];
-    
-       for ( cont = 1; cont < CANT_ARTICULOS; cont++)
-    {
-        for ( i = 0; i < CANT_ARTICULOS-1; i++)
-        {
-            if(articulo[i].total<articulo[i+1].total){
-                strcpy (desc,articulo[i].descripcion);
-                strcpy(articulo[i].descripcion,articulo[i+1].descripcion);
-                strcpy(articulo[i+1].descripcion, desc);
+        int cont, i;
+        articulos_t aux;
+        articulos_t *ptr;
 
-                articulo_index = articulo[i].cantidad_sucursal[SUCURSAL_1];
-                articulo[i].cantidad_sucursal[SUCURSAL_1] = articulo[i+1].cantidad_sucursal[SUCURSAL_1];
-                articulo[i+1].cantidad_sucursal[SUCURSAL_1] = articulo_index;
+        for(cont = 1 ; cont < CANT_ARTICULOS ; cont++){
 
-                articulo_index = articulo[i].cantidad_sucursal[SUCURSAL_2];
-                articulo[i].cantidad_sucursal[SUCURSAL_2] = articulo[i + 1].cantidad_sucursal[SUCURSAL_2];
-                articulo[i + 1].cantidad_sucursal[SUCURSAL_2] = articulo_index;
+            ptr = articulo;
 
-                articulo_index = articulo[i].cantidad_sucursal[SUCURSAL_3];
-                articulo[i].cantidad_sucursal[SUCURSAL_3] = articulo[i + 1].cantidad_sucursal[SUCURSAL_3];
-                articulo[i + 1].cantidad_sucursal[SUCURSAL_3] = articulo_index;
+            for(i=0 ; i < CANT_ARTICULOS - 1 ; i++){
 
-                articulo_index = articulo[i].total;
-                articulo[i].total = articulo[i + 1].total;
-                articulo[i + 1].total = articulo_index;
+                if(ptr->total < (ptr + 1)->total){
+
+                    aux = *ptr;
+                    *ptr = *(ptr + 1);
+                    *(ptr + 1) = aux;
+                }
+
+                ptr++;
+                
             }
-            
         }
-        
-    }
 }
