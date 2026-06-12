@@ -132,6 +132,9 @@ Se encontro un error en el codigo en el cual al calcular el total de stock se su
 
 ## Autor
 
-Trabajo realizado para la materia Informática 2 por el alumno: Feanco Garabato Sinic.
-Legajo: 120298
+Trabajo realizado para la materia Informática 2 por el alumno:
+
+`Feanco Garabato Sinic.`
+
+`Legajo: 120298`
 
