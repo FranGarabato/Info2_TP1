@@ -6,7 +6,7 @@
 #define SUCURSAL_1 0
 #define SUCURSAL_2 1
 #define SUCURSAL_3 2
-#define TOTAL 4
+#define TOTAL 3
 
 typedef struct {
     char descripcion[90];
