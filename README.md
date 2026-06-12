@@ -113,7 +113,7 @@ Por este motivo, algunas acciones simples permanecieron dentro de `main()`, como
 Se compilo utilizando GCC:
 
 ```bash
-gcc main.c funciones.c -c -Wall -o tp1
+gcc -c -Wall main.c funciones.c -o tp1
 ```
 > No se encontraron Warnings al compilar el programa
 
