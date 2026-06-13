@@ -167,7 +167,7 @@ Estas modificaciones mantienen el comportamiento original del programa, pero per
 
 Trabajo realizado para la materia Informática 2 por el alumno:
 
-`Feanco Garabato Sinic.`
+`Franco Garabato Sinic.`
 
 `Legajo: 120298`
 
